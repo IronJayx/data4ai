@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "dataprep-ai"
+version = "0.1.0"
+description = ""
+authors = ["Jeremie Feron <101343852+eBoreal@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "dataprep"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+tiktoken = "^0.5.1"
+numpy = "^1.26.2"
+streamlit = "^1.28.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
