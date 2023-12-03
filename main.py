@@ -17,7 +17,7 @@ if 'valid_df' not in st.session_state:
     st.session_state.valid_df = []
 
 st.header(
-    "Create a fine-tuning your LLM chat model."
+    "Create a fine-tuning dataset for OpenAI."
 )
 
 # functions
