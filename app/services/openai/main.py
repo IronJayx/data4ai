@@ -1,5 +1,5 @@
-from app.openai.transform import to_json, to_json_l
-from app.openai.validate import validate_finetuning_dataset_openai
+from app.services.openai.transform import to_json, to_json_l
+from app.services.openai.validate import validate_finetuning_dataset_openai
 
 
 def format_for_openai_finetuning(
