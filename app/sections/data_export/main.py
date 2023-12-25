@@ -1,12 +1,12 @@
 import streamlit as st
-import pandas as pd
 
 from app.services.openai.main import format_for_openai_finetuning
+
 from .config import SUPPORTED_DESTINATIONS, OPENAI_EXPORTS
 from .strings import SECTION_TITLE
 from .init import init_section_variables
-from .utils import get_discussion_lists
-from .finetuning import download_finetuned, deploy_fine_tuning
+from .utils import get_discussion_lists, download_jsonl
+from .finetuning import deploy_fine_tuning
 
 
 def export_data_section(title_prefix: str = ""):
@@ -21,7 +21,8 @@ def export_data_section(title_prefix: str = ""):
             messages = get_discussion_lists(df=st.session_state.valid_df)
 
             jsonl_str = format_for_openai_finetuning(
-                system_message=st.session_state.system_prompt, messages=messages
+                system_message=st.session_state.system_prompt,
+                messages=messages
             )
 
             if jsonl_str:
@@ -29,7 +30,7 @@ def export_data_section(title_prefix: str = ""):
                 download, deploy = st.tabs(OPENAI_EXPORTS)
 
                 with download:
-                    download_finetuned(jsonl_str)
+                    download_jsonl(jsonl_str)
 
                 with deploy:
                     deploy_fine_tuning(jsonl_str)

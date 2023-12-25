@@ -10,8 +10,6 @@ No-code tool to create Openai assitants with your data.
 # Roadmap:
 
 ## Features:
-- Integration with openai api:
-    - add your key & deploy
 - Support file assitant creation
     - Support for repo input -> full codebase to txt
     - Support for website: base urls and childs links (recursive)
