@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import streamlit as st
 
@@ -27,21 +28,25 @@ def validate_manual_input():
         st.session_state.input_df = df
 
 
-def process_csv(file_path):
-    # Read the CSV file
-    df = pd.read_csv(file_path, header=None)
+def process_tabular(file_path, name):
+    # Determine the file extension
+    _, file_extension = os.path.splitext(name)
 
-    # Get the number of columns
-    num_cols = len(df.columns)
-
-    # Check the number of columns and update headers accordingly
-    if num_cols == 2:
-        # Assign all rows to the same Discussion ID (1)
-        df.insert(0, "Discussion ID", 1)
-        df.columns = DATA_COLUMNS
-    elif num_cols == 3:
-        df.columns = DATA_COLUMNS
+    # Read the file based on its extension
+    if file_extension.lower() == '.csv':
+        df = pd.read_csv(file_path, header=None)
+    elif file_extension.lower() in ['.xls', '.xlsx']:
+        df = pd.read_excel(file_path, header=None)
     else:
-        raise ValueError("Unsupported number of columns in CSV")
+        raise ValueError("Unsupported file format")
+
+    # Check if the first row matches the expected column names
+    if all(isinstance(item, str) and item.lower() in [col.lower() for col in DATA_COLUMNS] for item in df.iloc[0]):
+        # If first row is a header, use it as column names
+        df.columns = df.iloc[0]
+        df = df.drop(0).reset_index(drop=True)
+    else:
+        # If no header, assign the default column names
+        df.columns = DATA_COLUMNS
 
     return df

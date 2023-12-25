@@ -10,8 +10,6 @@ No-code tool to create Openai assitants with your data.
 # Roadmap:
 
 ## Features:
-- Adapt manual input to new format
-- Support for excel
 - Integration with openai api:
     - add your key & deploy
 - Support file assitant creation

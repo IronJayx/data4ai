@@ -1,4 +1,4 @@
-import tiktoken # for token counting
+import tiktoken  # for token counting
 import numpy as np
 from collections import defaultdict
 from typing import List, Dict
@@ -62,6 +62,7 @@ def num_tokens_from_messages(messages, tokens_per_message=3, tokens_per_name=1):
     num_tokens += 3
     return num_tokens
 
+
 def num_assistant_tokens_from_messages(messages):
     num_tokens = 0
     for message in messages:
@@ -69,11 +70,13 @@ def num_assistant_tokens_from_messages(messages):
             num_tokens += len(encoding.encode(message["content"]))
     return num_tokens
 
+
 def print_distribution(values, name):
     print(f"\n#### Distribution of {name}:")
     print(f"min / max: {min(values)}, {max(values)}")
     print(f"mean / median: {np.mean(values)}, {np.median(values)}")
     print(f"p5 / p95: {np.quantile(values, 0.1)}, {np.quantile(values, 0.9)}")
+
 
 def count_tokens(dataset: List[Dict]):
     # Warnings and tokens counts
@@ -91,15 +94,18 @@ def count_tokens(dataset: List[Dict]):
             n_missing_user += 1
         n_messages.append(len(messages))
         convo_lens.append(num_tokens_from_messages(messages))
-        assistant_message_lens.append(num_assistant_tokens_from_messages(messages))
+        assistant_message_lens.append(
+            num_assistant_tokens_from_messages(messages))
 
     print("Num examples missing system message:", n_missing_system)
     print("Num examples missing user message:", n_missing_user)
     print_distribution(n_messages, "num_messages_per_example")
     print_distribution(convo_lens, "num_total_tokens_per_example")
-    print_distribution(assistant_message_lens, "num_assistant_tokens_per_example")
+    print_distribution(assistant_message_lens,
+                       "num_assistant_tokens_per_example")
     n_too_long = sum(l > 4096 for l in convo_lens)
     print(f"\n{n_too_long} examples may be over the 4096 token limit, they will be truncated during fine-tuning")
+
 
 def validate_finetuning_dataset_openai(
         dataset: List[Dict]

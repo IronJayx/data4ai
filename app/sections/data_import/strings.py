@@ -6,10 +6,15 @@ CSV_IMPORT_INFO = """
 """
 
 CSV_IMPORT_EXAMPLE = """
-    What is the capital of France?, Paris
-    What is the capital of Germany?, Berlin
-    What is the capital of America?, America is not a country
-    What is the capital of the US?, Washington
+    discussion_id,role,content
+    1,user,What is the capital of France ?,
+    1,assistant, Paris,
+    2,user,What is the capital of Germany ?,
+    2,assistant, Berlin,
+    2,user,Are you sure ?,
+    2,assistant, Yes,
+    3,user,What is the capital of America ?,
+    3,assistant, America is not a country,
     ...
 """
 

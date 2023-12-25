@@ -2,7 +2,7 @@ from io import StringIO
 import streamlit as st
 import pandas as pd
 
-from .utils import validate_manual_input, process_csv
+from .utils import validate_manual_input, process_tabular
 from .config import SUPPORTED_INPUT_FORMATS
 from .strings import CSV_IMPORT_INFO, CSV_IMPORT_EXAMPLE, FORMAT_NOT_SUPPORTED, SECTION_TITLE, WARNING_INIT
 from .init import init_section_variables
@@ -15,7 +15,7 @@ def data_import_section(title_prefix: str = ""):
     if len(st.session_state.system_prompt) > 0:
         st.subheader(f"{title_prefix}{SECTION_TITLE}", anchor="step-3")
         st.markdown("Choose import method: ")
-        source_csv, source_manual, source_excel, source_pdf, source_word = st.tabs(
+        source_csv, source_manual, source_pdf, source_word = st.tabs(
             SUPPORTED_INPUT_FORMATS)
 
         with source_csv:
@@ -24,19 +24,13 @@ def data_import_section(title_prefix: str = ""):
                 st.code(CSV_IMPORT_EXAMPLE)
 
             uploaded_file = st.file_uploader(
-                "Upload a file", type=[".csv", ".xlsx"])
+                "Upload a file", type=[".csv", ".xlsx", ".xls"])
+
             if uploaded_file is not None:
-                # To read file as bytes:
-                bytes_data = uploaded_file.getvalue()
-
-                # To convert to a string based IO:
-                stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
-
-                # To read file as string:
-                string_data = stringio.read()
-
-                # Can be used wherever a "file-like" object is accepted:
-                st.session_state.input_df = process_csv(uploaded_file)
+                st.session_state.input_df = process_tabular(
+                    file_path=uploaded_file,
+                    name=uploaded_file.name
+                )
         with source_manual:
             with st.expander("Provide 10+ examples of ideal input outputs", expanded=False):
                 st.session_state.manual_input_list = []
@@ -60,8 +54,6 @@ def data_import_section(title_prefix: str = ""):
                 st.button(label='Validate input', use_container_width=True,
                           on_click=validate_manual_input())
 
-        with source_excel:
-            st.markdown(FORMAT_NOT_SUPPORTED)
         with source_pdf:
             st.markdown(FORMAT_NOT_SUPPORTED)
         with source_word:
