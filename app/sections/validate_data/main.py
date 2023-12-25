@@ -1,8 +1,9 @@
 import streamlit as st
 
 from .utils import validate_edited_df
-from .strings import SECTION_TITLE, WARNING_INIT
+from .strings import SECTION_TITLE
 from .init import init_section_variables
+
 
 def validate_data_section(title_prefix: str = ""):
     init_section_variables()
@@ -14,4 +15,5 @@ def validate_data_section(title_prefix: str = ""):
             num_rows="dynamic",
             use_container_width=True
         )
-        st.button(label='Export', use_container_width=True, on_click=validate_edited_df)
+        st.button(label='Export', use_container_width=True,
+                  on_click=validate_edited_df)

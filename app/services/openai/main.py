@@ -1,16 +1,14 @@
-from app.services.openai.transform import to_json, to_json_l
+from app.services.openai.transform import to_openai_finetune, to_json_l
 from app.services.openai.validate import validate_finetuning_dataset_openai
 
 
 def format_for_openai_finetuning(
     system_message: str,
-    input_list: list,
-    output_list: list
+    messages: dict
 ) -> str:
-    dataset_json = to_json(
+    dataset_json = to_openai_finetune(
         system_message=system_message,
-        input_list=input_list,
-        output_list=output_list
+        messages=messages
     )
 
     res = validate_finetuning_dataset_openai(

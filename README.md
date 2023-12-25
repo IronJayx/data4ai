@@ -9,15 +9,9 @@ No-code tool to create Openai assitants with your data.
 
 # Roadmap:
 
-## User flow
-- Add landing page that points to app
-
 ## Features:
-- Refactor code
-- Rename repo data4ai
-- Support for multi message discussions.
-- Support for different input types (excel, word doc, pdfs...)
-- Support for different export formats: CSV, JSONL
+- Adapt manual input to new format
+- Support for excel
 - Integration with openai api:
     - add your key & deploy
 - Support file assitant creation
@@ -28,6 +22,8 @@ No-code tool to create Openai assitants with your data.
     - Assistant only
     - Assitant + finetuing
     - make a video & communicate on it
+- Support for different input types (excel, word doc, pdfs...)
+
 
 ## Codebase:
 - Migrate to Next.js & react

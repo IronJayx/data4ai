@@ -1,17 +1,21 @@
 import json
 
-def to_json(system_message, input_list, output_list):
+
+def to_openai_finetune(system_message: str, messages: dict):
     json_list = []
-    for inp, out in zip(input_list, output_list):
+    for discussion_id, messages in messages.items():
+        # Prepend the system message to the discussion
+        discussion_with_system_message = [
+            {"role": "system", "content": system_message}] + messages
+
+        # Create a JSON object for the discussion
         json_obj = {
-            "messages": [
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": inp},
-                {"role": "assistant", "content": out}
-            ]
+            "messages": discussion_with_system_message
         }
         json_list.append(json_obj)
+
     return json_list
+
 
 def to_json_l(json_list):
     jsonl_str = ''

@@ -2,12 +2,11 @@ from io import StringIO
 import streamlit as st
 import pandas as pd
 
-from app.services.openai.main import format_for_openai_finetuning
-
-from .utils import validate_manual_input
-from .config import DATA_COLUMNS, SUPPORTED_INPUT_FORMATS
+from .utils import validate_manual_input, process_csv
+from .config import SUPPORTED_INPUT_FORMATS
 from .strings import CSV_IMPORT_INFO, CSV_IMPORT_EXAMPLE, FORMAT_NOT_SUPPORTED, SECTION_TITLE, WARNING_INIT
 from .init import init_section_variables
+
 
 def data_import_section(title_prefix: str = ""):
 
@@ -16,14 +15,16 @@ def data_import_section(title_prefix: str = ""):
     if len(st.session_state.system_prompt) > 0:
         st.subheader(f"{title_prefix}{SECTION_TITLE}", anchor="step-3")
         st.markdown("Choose import method: ")
-        source_csv, source_manual, source_excel, source_pdf, source_word = st.tabs(SUPPORTED_INPUT_FORMATS)
+        source_csv, source_manual, source_excel, source_pdf, source_word = st.tabs(
+            SUPPORTED_INPUT_FORMATS)
 
         with source_csv:
             st.info(CSV_IMPORT_INFO)
             with st.expander("See example"):
                 st.code(CSV_IMPORT_EXAMPLE)
 
-            uploaded_file = st.file_uploader("Upload a file", type=[".csv", ".xlsx"])
+            uploaded_file = st.file_uploader(
+                "Upload a file", type=[".csv", ".xlsx"])
             if uploaded_file is not None:
                 # To read file as bytes:
                 bytes_data = uploaded_file.getvalue()
@@ -35,10 +36,7 @@ def data_import_section(title_prefix: str = ""):
                 string_data = stringio.read()
 
                 # Can be used wherever a "file-like" object is accepted:
-                st.session_state.input_df = pd.read_csv(
-                    uploaded_file,
-                    names=DATA_COLUMNS)
-
+                st.session_state.input_df = process_csv(uploaded_file)
         with source_manual:
             with st.expander("Provide 10+ examples of ideal input outputs", expanded=False):
                 st.session_state.manual_input_list = []
@@ -59,7 +57,8 @@ def data_import_section(title_prefix: str = ""):
                 if st.button('Add More'):
                     st.session_state.num_rows += 1  # increase the number of rows by 1
 
-                st.button(label='Validate input', use_container_width=True, on_click=validate_manual_input())
+                st.button(label='Validate input', use_container_width=True,
+                          on_click=validate_manual_input())
 
         with source_excel:
             st.markdown(FORMAT_NOT_SUPPORTED)
