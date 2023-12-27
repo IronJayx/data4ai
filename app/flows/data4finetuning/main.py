@@ -7,8 +7,9 @@ from app.sections.validate_data.main import validate_data_section
 from app.sections.data_export.main import export_data_section
 from .init import init_flow_variables
 
+
 def data4finetuning():
-    st.header("Create a fine-tuning dataset for OpenAI.")
+    st.header("Fine-tune OpenaAI models")
 
     # init
     init_flow_variables()

@@ -2,11 +2,12 @@ import streamlit as st
 
 from app.services.openai.main import format_for_openai_finetuning
 
-from .config import SUPPORTED_DESTINATIONS, OPENAI_EXPORTS
+from .config import SUPPORTED_DESTINATIONS, OPENAI_EXPORTS, OPENAI_EXPORTS_ASSITANT
 from .strings import SECTION_TITLE
 from .init import init_section_variables
 from .utils import get_discussion_lists, download_jsonl
 from .finetuning import deploy_fine_tuning
+from .assistant import deploy_assistant
 
 
 def export_data_section(title_prefix: str = ""):
@@ -34,3 +35,17 @@ def export_data_section(title_prefix: str = ""):
 
                 with deploy:
                     deploy_fine_tuning(jsonl_str)
+
+
+def export_data_assistant(title_prefix: str = ""):
+    st.subheader(f"{title_prefix}Deploy your assistant")
+    dest_openai, dest_other = st.tabs(SUPPORTED_DESTINATIONS)
+
+    with dest_openai:
+
+        deploy, download = st.tabs(OPENAI_EXPORTS_ASSITANT)
+
+        with download:
+            pass
+        with deploy:
+            deploy_assistant(file_ids=[])

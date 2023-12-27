@@ -24,7 +24,7 @@ def data_import_section(title_prefix: str = ""):
                 st.code(CSV_IMPORT_EXAMPLE)
 
             uploaded_file = st.file_uploader(
-                "Upload a file", type=[".csv", ".xlsx", ".xls"])
+                "Upload a file", key=f"{title_prefix}-base-data", type=[".csv", ".xlsx", ".xls"])
 
             if uploaded_file is not None:
                 st.session_state.input_df = process_tabular(
@@ -39,20 +39,22 @@ def data_import_section(title_prefix: str = ""):
                 for i in range(st.session_state.num_rows):
                     col1, col2 = st.columns(2)
                     with col1:
-                        input_text = st.text_input(f"User Input {i + 1}")
+                        input_text = st.text_area(
+                            f"User Input {i + 1}", key=f"{title_prefix}-{i + 1}-u",)
                     with col2:
-                        output_text = st.text_input(f"AI Output {i + 1}")
+                        output_text = st.text_area(
+                            f"AI Output {i + 1}", key=f"{title_prefix}-{i + 1}-ai",)
 
                     if (len(input_text) > 0) & (len(output_text) > 0):
                         st.session_state.manual_input_list.append(input_text)
                         st.session_state.manual_output_list.append(output_text)
 
                 # "+" Button to add one more row
-                if st.button('Add More'):
+                if st.button('Add More', key=f"{title_prefix}-add"):
                     st.session_state.num_rows += 1  # increase the number of rows by 1
 
-                st.button(label='Validate input', use_container_width=True,
-                          on_click=validate_manual_input())
+                st.button(label='Validate input', key=f"{title_prefix}-val",
+                          use_container_width=True, on_click=validate_manual_input())
 
         with source_pdf:
             st.markdown(FORMAT_NOT_SUPPORTED)
