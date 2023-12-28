@@ -2,3 +2,5 @@ tiktoken
 numpy
 pandas
 streamlit
+beautifulsoup4
+openai

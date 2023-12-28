@@ -2,3 +2,4 @@ tiktoken
 numpy
 pandas
 streamlit
+openai
