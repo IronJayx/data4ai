@@ -1,11 +1,11 @@
 # main.py
 import streamlit as st
 
-from app.sections.system_prompt.main import system_prompt_section
-from app.sections.data_import.main import data_import_section
-from app.sections.validate_data.main import validate_data_section
-from app.sections.data_export.main import export_data_section
-from .init import init_flow_variables
+from sections.system_prompt.main import system_prompt_section
+from sections.data_import.main import data_import_section
+from sections.validate_data.main import validate_data_section
+from sections.data_export.main import export_data_section
+from init import init_flow_variables
 
 
 def data4finetuning():

@@ -1,7 +1,7 @@
 # main.py
 import streamlit as st
 
-from app.flows.data4finetuning.main import data4finetuning
+from main import data4finetuning
 
 
 def main():

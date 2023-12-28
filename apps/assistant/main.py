@@ -76,9 +76,32 @@ def assistant_deployment_section(client):
                 st.error(message)
 
 
+def app_description():
+    st.markdown("""
+        #### Create a custom GPT-assistant augmented with domain-specific knowledge from a web domain.\n
+    """)
+    with st.expander("More on how it works"):
+        st.text("""
+
+                You will need to provide two things:
+
+                - an URL: the app will scrap this URL and all "childs" urls it finds starting with the same domain name.
+                - you OpenAI key: this will be used to upload scraped information to your OpenAI account and deploy  a customized assistant.
+
+                Once launched the app will:
+
+                - Scrap the website and its child urls
+                - Split scraped information across <= 20 files (openai api only supports 20 files per assistant)
+                - Deploy your assistant
+
+                 Note: we don't store your OpenAI key.
+        """)
+
+
 def main():
     st.title("Web2GPT Assistant")
-    # ... [description and expander code]
+
+    app_description()
 
     base_url = data_retrieval_section()
 

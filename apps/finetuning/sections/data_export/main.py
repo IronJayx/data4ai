@@ -1,6 +1,6 @@
 import streamlit as st
 
-from app.services.openai.main import format_for_openai_finetuning
+from services.openai.main import format_for_openai_finetuning
 
 from .config import SUPPORTED_DESTINATIONS, OPENAI_EXPORTS, OPENAI_EXPORTS_ASSITANT
 from .strings import SECTION_TITLE

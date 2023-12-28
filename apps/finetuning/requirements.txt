@@ -1,0 +1,4 @@
+tiktoken
+numpy
+pandas
+streamlit

@@ -42,20 +42,18 @@ def upload_file(client, content, purpose):
 
 
 def connect():
-    if not os.environ["OPENAI_API_KEY"]:
+    # User inputs OpenAI API token
+    api_token = st.text_input(
+        "Enter your OpenAI API Token", type="password")
 
-        # User inputs OpenAI API token
-        api_token = st.text_input(
-            "Enter your OpenAI API Token", type="password")
+    # Export the API token as an environment variable
+    os.environ["OPENAI_API_KEY"] = api_token
 
-        # Export the API token as an environment variable
-        os.environ["OPENAI_API_KEY"] = api_token
+    if api_token:
 
-        if api_token:
+        client = OpenAI()
 
-            client = OpenAI()
-
-            return client
+        return client
 
 
 def download_jsonl(jsonl_str):
